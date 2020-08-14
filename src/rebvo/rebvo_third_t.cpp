@@ -308,7 +308,7 @@ void REBVO::ThirdThread(REBVO *cf){
 
             //******* Save trayectory ************//
 
-            t_log << std::scientific<<std::setprecision(18)<< pbuf.t/cf->params.ImuTimeScale << " " <<pbuf.nav.Pos << " "<<util::LieRot2Quaternion(pbuf.nav.PoseLie)<<"\n";
+            t_log << std::scientific<<std::setprecision(18)<< pbuf.t << " " <<pbuf.nav.Pos << util::LieRot2Quaternion(pbuf.nav.PoseLie)<<"\n";
             //t_log.flush();
 
         }
