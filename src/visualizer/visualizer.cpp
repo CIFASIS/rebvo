@@ -281,7 +281,7 @@ int visualizer::Run(){
     RGB24Pixel *data=new RGB24Pixel[frameSize.w*frameSize.h];
 
     const int net_k_max=KEYLINE_MAX;
-    const int flen=MFC_MAX_STREAM_SIZE+sizeof(net_packet_hdr)+sizeof(net_keyline)*net_k_max+FF_INPUT_BUFFER_PADDING_SIZE;
+    const int flen=MFC_MAX_STREAM_SIZE+sizeof(net_packet_hdr)+sizeof(net_keyline)*net_k_max+AV_INPUT_BUFFER_PADDING_SIZE;
     unsigned char *net_pak= new unsigned char[flen];
     net_hdr= (net_packet_hdr*)net_pak;
 

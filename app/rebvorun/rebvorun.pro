@@ -22,6 +22,8 @@ LIBS += -L/usr/local/lib \
     -lgd\
     -llapack\
     -lpthread \
+    -lgfortran \
+    -lblas \
     $(REBVOLIBS) #-lNE10
 
 
