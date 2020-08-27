@@ -94,7 +94,7 @@
     LogFile=rebvo_rosario_log.m                                                                 //Log file in .m format
     TrayFile=rebvo_rosario_tray.txt                                                             //Trayectory in TUM dataset format [t pos quat]
 
-    StereoAvaiable=1
+    StereoAvaiable=0
 
 &DataSetCamera
 
