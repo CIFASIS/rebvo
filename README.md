@@ -1,4 +1,3 @@
-
 # REBiVO
 ## Realtime Edge Based Inertial Visual Odometry for a Monocular Camera
 
@@ -16,6 +15,46 @@ A ROS wrapper (under development)
 
 Introductory video: https://youtu.be/7pn29iGklgI
 
+### Docker Support
+A script to build a docker image is provided:
+```
+./build.sh
+```
+Dataset must be saved in EuRoC directory structure.
+```
+path/to/dataset/
+├── cam0
+│   ├── data
+│   │   ├── 1514301955572000000.png
+│   │   ...
+│   │   └── 1514302515181000000.png
+│   └── data.csv                       # Two-column file (timestamp in nanoseconds and image filename)
+├── cam1
+│   ├── data
+│   │   ├── 1514301955572000000.png
+│   │   ...
+│   │   └── 1514302515181000000.png
+│   └── data.csv                       # Two-column file (timestamp in nanoseconds and image filename)
+└── imu0
+    └── data.csv                       # A CSV file containing IMU data (with timestamps in nanoseconds)
+
+```
+Write your own configuration file. Take GlobalConfig_Rosario as an example.
+Then, open two terminals and open a shell in a docker container in each terminal:
+```
+./run.sh path/to/dataset/
+```
+In the first one, run the visualizer:
+```
+cd /root/rebvo/app/visualizer
+./visualizer GlobalConfig_Rosario     # GlobalConfig_Rosario is given as an example
+```
+In the second terminal, run rebvo:
+```
+cd /root/rebvo/app/rebvorun
+./rebvorun GlobalConfig_Rosario     # GlobalConfig_Rosario is given as an example
+```
+**NOTE**: a script to convert Rosario dataset to Euroc directory structure will be provided.
 
 ### System requirements
 
