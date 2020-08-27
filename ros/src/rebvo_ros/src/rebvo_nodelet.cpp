@@ -270,7 +270,19 @@ bool imgMsg2Rebvo(const sensor_msgs::ImageConstPtr& imgMsg,
             }
         }
 
-    }else{
+    } else if (imgMsg->encoding.compare(sensor_msgs::image_encodings::BGR8) == 0) {
+	for (int y = 0; y < imgRebvo->Size().h; ++y) {
+            for (int x = 0; x < imgRebvo->Size().w; ++x) {
+
+                (*imgRebvo)(x, y).pix.b = imgMsg->data[imgMsg->step * y + x*3+0];
+                (*imgRebvo)(x, y).pix.g = imgMsg->data[imgMsg->step * y + x*3+1];
+                (*imgRebvo)(x, y).pix.r = imgMsg->data[imgMsg->step * y + x*3+2];
+            }
+        }
+
+    }
+	
+	else{
 		return false;
 	}
 
