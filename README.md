@@ -39,7 +39,7 @@ path/to/dataset/
     └── data.csv                       # A CSV file containing IMU data (with timestamps in nanoseconds)
 
 ```
-Write your own configuration file. Take GlobalConfig_Rosario as an example.
+Write your own configuration file. Take `GlobalConfig_Rosario` as an example.
 Then, open two terminals and open a shell in a docker container in each terminal:
 ```
 ./run.sh path/to/dataset/
@@ -65,6 +65,24 @@ sed 's/.$//' rebvo_rosario_tray.txt > rebvo_output.txt
 ```
 
 **NOTE**: a script to convert Rosario dataset to Euroc directory structure will be provided.
+#### ROS support (in a docker container)
+If you prefer to run `rebvo` with ROS support, just build the image as explained in the above section.
+Then, run `./run.sh`. Once in the container, go to the workspace and source the `devel` space:
+```
+cd /root/rebvo/ros
+catkin_make
+source devel/setup.bash
+```
+Now, you can start the main node:
+```
+roslaunch rebvo rebvo_rosario.launch
+```
+Write your own configuration if you need it, based on the following files:
+```
+ros/src/rebvo_ros/launch/rebvo_rosario.launch
+ros/src/rebvo_ros/config/rebvo_rosario.yaml
+ros/src/rebvo_ros/resource/rebvo_rosario.rviz
+```
 
 ### System requirements
 
