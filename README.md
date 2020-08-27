@@ -54,6 +54,16 @@ In the second terminal, run rebvo:
 cd /root/rebvo/app/rebvorun
 ./rebvorun GlobalConfig_Rosario     # GlobalConfig_Rosario is given as an example
 ```
+Output file can be copied to the host using `docker cp`. The name of the output file is configured in the configuration file and it is usually saved in `/root/rebvo/app/rebvorun`. 
+If you want to evaluate the trajectory using evo, and you get the following error:
+```
+[ERROR] TUM trajectory files must have 8 entries per row and no trailing delimiter at the end of the rows (space)
+```
+Just use `sed` to remove last character in each line:
+```
+sed 's/.$//' rebvo_rosario_tray.txt > rebvo_output.txt
+```
+
 **NOTE**: a script to convert Rosario dataset to Euroc directory structure will be provided.
 
 ### System requirements
