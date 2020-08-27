@@ -202,7 +202,9 @@ REBVO::REBVO(const char *configFile)
         InitOK&=config.GetConfigByName("DataSetCamera","DataSetDirStereo",params.DataSetDirStereo,true);
         InitOK&=config.GetConfigByName("DataSetCamera","DataSetFileStereo",params.DataSetFileStereo,true);
 
-
+        std::string file;
+        InitOK&=config.GetConfigByName("Stereo","Cam0ToCam1SE3File",file,true);
+        InitOK&=LoadCam0ToCam1SE3(file.data());
 
         InitOK&=config.GetConfigByName("Stereo","ZfX",params.z_f_x_stereo,true);
         InitOK&=config.GetConfigByName("Stereo","ZfY",params.z_f_y_stereo,true);
@@ -235,7 +237,31 @@ REBVO::REBVO(const REBVOParameters &parameters)
     construct();
 }
 
+bool REBVO::LoadCam0ToCam1SE3(const char *se3_file){
+    std::ifstream file(se3_file);
 
+    if(!file.is_open()){
+        std::cout << "LoadCam0ToCam1: could not open SE3 file "<<se3_file <<" \n";
+        return false;
+    }
+
+    std::string num;
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            std::getline(file,num,',');
+            params.RDataSetCam0ToCam1(i,j)=std::stod(num);
+        }
+        std::getline(file,num,',');
+        params.TDataSetCam0ToCam1[i]=std::stod(num);
+    }
+
+    std::cout<<"Cam0-Cam1 Rotation:\n"<<params.RDataSetCam0ToCam1<<"\nCam0-Cam1 Translation:\n"<<params.TDataSetCam0ToCam1<<"\n";
+
+    file.close();
+    return true;
+
+
+}
 
 void REBVO::construct(){
 

@@ -11,6 +11,7 @@
 
     ReferencePoints=6000               //Reference to the number of points when autothreshold
     MaxPoints=7000                     //Absolute maximun number of points
+    TrackPoints=2000                   //Points used for tracking  
 
     DetectorThresh=0.01                 //Manual theshold
     DetectorAutoGain=5e-7               //Auto threshold gain, 0=manual
@@ -92,6 +93,7 @@
     LogFile=rebvo_log.m                                                                 //Log file in .m format
     TrayFile=rebvo_tray.txt                                                             //Trayectory in TUM dataset format [t pos quat]
 
+    TrackKeyFrames=0                                                                    //Save keyframes on a file?
     StereoAvaiable=0
 
 

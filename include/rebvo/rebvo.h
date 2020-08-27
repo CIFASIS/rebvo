@@ -103,6 +103,8 @@ struct REBVOParameters{
     std::string DataSetFileStereo;      //The directory of the dataset
     std::string DataSetDirStereo;       //The file of the dataset
     double CamTimeScale;                //Timescale multiplier for the dataset file
+    TooN::Matrix<3,3> RDataSetCam0ToCam1;   //SE3 transformation Cam0 to Cam1 (if stereo is available)
+    TooN::Vector <3> TDataSetCam0ToCam1;
 
     //Camara parameters
 
@@ -417,6 +419,7 @@ class REBVO
     }
 
     void construct();
+    bool LoadCam0ToCam1SE3(const char *se3_file);
 
     VideoCam * initCamera();
     VideoCam *initPairCamera();

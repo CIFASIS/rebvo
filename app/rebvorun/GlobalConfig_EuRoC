@@ -11,6 +11,7 @@
 
     ReferencePoints=12000               //Reference to the number of points when autothreshold
     MaxPoints=16000                     //Absolute maximun number of points
+    TrackPoints=7000                   //Points used for tracking
 
     DetectorThresh=0.01                 //Manual theshold
     DetectorAutoGain=5e-7               //Auto threshold gain, 0=manual
@@ -97,15 +98,15 @@
 
 &DataSetCamera
 
-    DataSetDir=/home/juan/Datasets/V2_02_medium/mav0/cam0/data/                           //The directory of the dataset
-    DataSetFile=/home/juan/Datasets/V2_02_medium/mav0/cam0/data.csv                       //The file of the dataset
-    DataSetDirStereo=/home/juan/Datasets/V2_02_medium/mav0/cam1/data/                           //The directory of the dataset
-    DataSetFileStereo=/home/juan/Datasets/V2_02_medium/mav0/cam1/data.csv                       //The file of the dataset
+    DataSetDir=/dataset/cam0/data/                           //The directory of the dataset
+    DataSetFile=/dataset/cam0/data.csv                       //The file of the dataset
+    DataSetDirStereo=/dataset/cam1/data/                           //The directory of the dataset
+    DataSetFileStereo=/dataset/cam1/data.csv                       //The file of the dataset
     TimeScale=1e-9
 
 &IMU
     ImuMode=2                                                          //1= use the archquitecture specific class, 2=load full data from ImuFile
-    ImuFile=/home/juan/Datasets/V2_02_medium/mav0/imu0/data.csv         //File containing the SE3 transformation from IMU to Camera
+    ImuFile=/dataset/imu0/data.csv         //File containing the SE3 transformation from IMU to Camera
     CamImuSE3File=se3_EuRoC.csv                                         //TimeScale of the IMU file
     TimeScale=1e-9
 
@@ -136,6 +137,7 @@
     DeviceName=/dev/ttySAC2                                             //device name for archIMU
 
 &Stereo
+    Cam0ToCam1SE3File=se3_cam0cam1_euroc.csv
     ZfX=457.587										//Camera XY focal length
     ZfY=456.134
     PPx=379.999         								//Camera principal point

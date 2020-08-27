@@ -463,12 +463,7 @@ void  REBVO::SecondThread(REBVO *cf){
                 //****** If stereo information, use it ****
 
                 if(cf->params.StereoAvaiable){
-
-                    Matrix <3,3> RCam2Pair=Data(  0.999997256477450,   0.002312067192420,   0.000376008102351,
-                                                 -0.002317135723285,   0.999898048506528,   0.014089835846697,
-                                                 -0.000343393120589,  -0.014090668452670,   0.999900662638179);
-                    Vector <3> TCam2Pair=makeVector(-0.110073808127139,0.000399121547014,-0.000853702503351);
-                    new_buf.stereo_match_num=new_buf.ef->directed_matching_stereo(TCam2Pair,RCam2Pair,new_buf.ef_pair,
+                    new_buf.stereo_match_num=new_buf.ef->directed_matching_stereo(cf->params.TDataSetCam0ToCam1,cf->params.RDataSetCam0ToCam1,new_buf.ef_pair,
                                                                                   cf->params.MatchThreshModule,cf->params.MatchThreshAngle,100,
                                                                                   cf->params.LocationUncertaintyMatch,cf->params.ReshapeQAbsolute,
                                                                                   cf->params.ReshapeQRelative,cf->params.LocationUncertainty);
