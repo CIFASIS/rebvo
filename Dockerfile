@@ -43,6 +43,7 @@ RUN unzip /root/rebvo/TooN-2.2.zip -d /root/TooN && \
     cd /root/TooN/TooN-2.2 && \
     ./configure && make && make install && \
     cd /root/rebvo/ && \
+    qmake && \
     make REBVOFLAGS=-m64 && \
     cd /root/rebvo/ros && \
    /bin/bash -c '. /opt/ros/indigo/setup.bash; catkin_make'
