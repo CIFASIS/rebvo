@@ -307,8 +307,9 @@ void REBVO::ThirdThread(REBVO *cf){
             //a_log.flush();
 
             //******* Save trayectory ************//
-
-            t_log << std::scientific<<std::setprecision(18)<< pbuf.t << " " <<pbuf.nav.Pos << util::LieRot2Quaternion(pbuf.nav.PoseLie)<<"\n";
+            TooN::Vector<4> q = util::LieRot2Quaternion(pbuf.nav.PoseLie);
+            t_log << std::scientific<<std::setprecision(18)<< pbuf.t << " " <<pbuf.nav.Pos << q[0] << " " << q[1] << " " \
+            << q[2] << " " << q[3] << "\n";
             //t_log.flush();
 
         }
