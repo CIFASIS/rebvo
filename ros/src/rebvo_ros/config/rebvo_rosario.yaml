@@ -30,20 +30,20 @@ rebvo:
                  0.9984567420628084, 0.0033909183804303744, -0.055431362078334365, 
                  0.05472134884952806, 0.11015916496574298, 0.9924064350628417]
     ImuMode: 1
-    SampleTime: 0.005
+    SampleTime: 0.0070422
     TimeDesinc: 0
     InitBias: true
     InitBiasFrameNum: 10
-    BiasHintX: 0.0188
-    BiasHintY: 0.0037
-    BiasHintZ: 0.0776
+    BiasHintX: 0.00142 # obtained from sequences that initialize in a stationary state (they are used when InitBias is false)
+    BiasHintY: 0.00205
+    BiasHintZ: 0.00089
     g_module: 9.8
-    GiroMeasStdDev: 1.6968e-04
-    GiroBiasStdDev: 1.9393e-05
-    AcelMeasStdDev: 2.0000e-3
+    GiroMeasStdDev: 0.1
+    GiroBiasStdDev: 0.05
+    AcelMeasStdDev: 0.1
     g_module_uncer: 0.2e3
     g_uncert: 2e-3
-    VBiasStdDev: 1e-7
+    VBiasStdDev: 1e-4
     CircBufferSize: 1000
     ScaleStdDevMult: 1e-2
     ScaleStdDevMax: 1e-4
@@ -51,11 +51,10 @@ rebvo:
 
 
   Detector:
-    Sigma0: 3.56359
+    Sigma0: 1.7818
     KSigma: 1.2599
-    ReferencePoints: 15000
-    MaxPoints: 40000
-    TrackPoints: 12000
+    ReferencePoints: 12000
+    MaxPoints: 16000
     DetectorThresh: 0.01
     DetectorAutoGain: 5e-7
     DetectorMaxThresh: 0.5
@@ -70,7 +69,7 @@ rebvo:
     QCutOffNumBins: 100
     QCutOffQuantile: 0.9
     TrackerIterNum: 5
-    TrackerInitType: 0
+    TrackerInitType: 2
     TrackerInitIterNum: 2
     TrackerMatchThresh: 0.5
     MatchThreshModule: 1
