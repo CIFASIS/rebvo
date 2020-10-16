@@ -7,7 +7,4 @@
         <param name="rebvo/frame_id" value="rebvo_frame"/>
         </node>
 
-
-        <!-- Visualisation RVIZ -->
-        <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rebvo)/resource/rebvo_rosario.rviz" output="screen"/>
 </launch> 
