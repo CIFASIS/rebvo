@@ -5,8 +5,8 @@ rebvo:
     VideoNetPort: 2708
     BlockingUDP: false
     SaveLog: true
-    LogFile: rebvo_ros_log.m
-    TrayFile: rebvo_ros_tray.txt
+    LogFile: /root/catkin_ws/src/rebvo/rebvo_ros_log.m        # $REBVO_ROOT/rebvo_ros_log.txt
+    TrayFile: /root/catkin_ws/src/rebvo/rebvo_ros_tray.txt    # $REBVO_ROOT/rebvo_ros_tray.txt
 
   Camera:
     ZfX: 348.522264
