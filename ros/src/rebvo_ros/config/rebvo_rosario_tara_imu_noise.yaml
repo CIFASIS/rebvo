@@ -1,0 +1,92 @@
+rebvo:
+  global:
+    VideoNetEnabled: true
+    VideoNetHost: 127.0.0.1
+    VideoNetPort: 2708
+    BlockingUDP: false
+    SaveLog: true
+    LogFile: /root/catkin_ws/src/rebvo/rebvo_ros_log.m        # $REBVO_ROOT/rebvo_ros_log.txt
+    TrayFile: /root/catkin_ws/src/rebvo/rebvo_ros_tray.txt    # $REBVO_ROOT/rebvo_ros_tray.txt
+
+  Camera:
+    ZfX: 348.522264
+    ZfY: 348.449870
+    PPx: 344.483596
+    PPy: 188.808062
+    KcR2: -0.174497 # -0.28340811
+    KcR4: 0.027127 # 0.07395907
+    KcR6: 0
+    KcP1: -0.000359 # 0.00019359
+    KcP2: 0.000457 # 1.76187114e-05
+    ImageWidth: 672
+    ImageHeight: 376
+    FPS: 15
+    UseUndistort: true
+    Rotate180: false
+
+  imu:
+    transCam2Imu: [-0.030950056130583600, -0.077136433704428381, 0.026512487799308242]
+    rotCam2Imu: [0.009471441780975032, -0.9939081748565041, 0.10980360533243941,
+                 0.9984567420628084, 0.0033909183804303744, -0.055431362078334365, 
+                 0.05472134884952806, 0.11015916496574298, 0.9924064350628417]
+    ImuMode: 1
+    SampleTime: 0.0070422
+    TimeDesinc: 0
+    InitBias: true
+    InitBiasFrameNum: 10
+    BiasHintX: 0.00142 # obtained from sequences that initialize in a stationary state (they are used when InitBias is false)
+    BiasHintY: 0.00205
+    BiasHintZ: 0.00089
+    g_module: 9.8
+    GiroMeasStdDev: 0.00028579943407611055
+    GiroBiasStdDev: 0.00007544790215216806
+    AcelMeasStdDev: 0.0006367367080238862
+    g_module_uncer: 0.2e3
+    g_uncert: 2e-3
+    VBiasStdDev: 1e-4
+    CircBufferSize: 1000
+    ScaleStdDevMult: 1e-2
+    ScaleStdDevMax: 1e-4
+    ScaleStdDevInit: 1.2e-3
+
+
+  Detector:
+    Sigma0: 1.7818
+    KSigma: 1.2599
+    ReferencePoints: 12000
+    MaxPoints: 16000
+    DetectorThresh: 0.01
+    DetectorAutoGain: 5e-7
+    DetectorMaxThresh: 0.5
+    DetectorMinThresh: 0.005
+    DetectorPlaneFitSize: 2
+    DetectorPosNegThresh: 0.4
+    DetectorDoGThresh: 0.095259868922420
+
+  TrackMaper:
+
+    SearchRange: 40
+    QCutOffNumBins: 100
+    QCutOffQuantile: 0.9
+    TrackerIterNum: 5
+    TrackerInitType: 2
+    TrackerInitIterNum: 2
+    TrackerMatchThresh: 0.5
+    MatchThreshModule: 1
+    MatchThreshAngle: 45
+    MatchNumThresh: 0
+    ReweigthDistance: 2
+    RegularizeThresh: 0.5
+    LocationUncertaintyMatch: 2
+    ReshapeQAbsolute: 1e-4
+    ReshapeQRelative: 1.6968e-04
+    LocationUncertainty: 1
+    DoReScaling: false
+    GlobalMatchThreshold: 500
+
+  ProcesorConfig:
+    SetAffinity: true
+    CamaraT1: 1
+    CamaraT2: 2
+    CamaraT3: 3
+
