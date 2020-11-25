@@ -34,3 +34,5 @@
 *.gcda
 *.rpo
 /Release/
+
+outputs/
