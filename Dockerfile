@@ -40,4 +40,4 @@ RUN mkdir -p $REBVO_THIRDPARTY/lapack/build && \
 
 WORKDIR $CATKIN_WS
 COPY ./scripts/ $CATKIN_WS
-RUN ["/bin/bash", "-c", "chmod +x build.sh && ./build.sh && chmod +x modify_entrypoint.sh && ./modify_entrypoint.sh"]
+RUN ["/bin/bash", "-c", "chmod +x build.sh && chmod +x modify_entrypoint.sh && sync && ./build.sh && ./modify_entrypoint.sh"]
