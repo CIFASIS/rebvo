@@ -6,7 +6,7 @@
 	url = https://github.com/Reference-LAPACK/lapack.git
 [submodule "thirdparty/libav"]
 	path = thirdparty/libav
-	url = git://git.libav.org/libav.git
+	url = https://github.com/libav/libav.git
 [submodule "thirdparty/TooN"]
 	path = thirdparty/TooN
 	url = https://github.com/edrosten/TooN.git
