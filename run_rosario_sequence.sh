@@ -4,7 +4,8 @@
 # It requires a catkin workspace containing pose_listener.
 
 set -eE # Any subsequent commands which fail will cause the shell script to exit immediately
-CONTAINER_OUTPUT_FILE=/root/catkin_ws/src/rebvo/rebvo_ros_tray.txt
+CONTAINER_OUTPUT_FILENAME=rebvo_ros_tray.txt
+CONTAINER_OUTPUT_FILE=/root/catkin_ws/src/rebvo/$CONTAINER_OUTPUT_FILENAME
 
 # Get full directory name of the script no matter where it is being called from
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -49,7 +50,10 @@ function cleanup() {
   if [ -n "${CID}" ] ; then
     printf "\e[31m%s %s\e[m\n" "Cleaning"
     docker stop $CID > /dev/null
-    docker cp $CID:$CONTAINER_OUTPUT_FILE $OUTPUT_FILE
+    OUTPUT_DIR=$(dirname $OUTPUT_FILE)
+    # Copy output file from container to host (compatible with old versions of Docker)
+    docker cp $CID:$CONTAINER_OUTPUT_FILE $OUTPUT_DIR
+    mv $OUTPUT_DIR/$CONTAINER_OUTPUT_FILENAME $OUTPUT_FILE
     docker logs $CID > $(dirname $OUTPUT_FILE)/$(basename $OUTPUT_FILE .txt)_log.txt
     docker rm $CID > /dev/null
     unset CID
