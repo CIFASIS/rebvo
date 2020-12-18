@@ -35,9 +35,20 @@
 namespace rebvo {
 
 RebvoNodelet::RebvoNodelet() {
+#ifdef SAVE_TIMES
+    f_track_times_.open("tracking_times_start.txt");
+    f_track_times_ << std::fixed;
+    f_track_times_ << std::setprecision(6);
+    num_tracked_frames_ = 0;
+#endif
+
 }
 
 RebvoNodelet::~RebvoNodelet() {
+
+#ifdef SAVE_TIMES
+    f_track_times_.close();
+#endif
 
 	camera_sub_.shutdown();
 
@@ -123,6 +134,12 @@ void RebvoNodelet::imageCb(const sensor_msgs::ImageConstPtr &image) {
 		NODELET_ERROR("Droping Frame");
 		return;
 	}
+
+#ifdef SAVE_TIMES
+    num_tracked_frames_++;
+    auto const t = std::chrono::system_clock::now().time_since_epoch().count();
+    f_track_times_ << num_tracked_frames_ << " " << t / 1e09 << std::endl;
+#endif
 
 	if (!imgMsg2Rebvo(image, imgRebvoPtr))
         NODELET_ERROR_STREAM("Img msg doesn't match with revbo config, only MONO8 and rgb8 encodings are suported. Img Size:"<<image->width<<"x"<<image->height<<" Encoding:"<<image->encoding);

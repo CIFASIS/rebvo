@@ -2,6 +2,11 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(rebvo)
 
+option(SAVE_TIMES "Enable option to save tracking times" OFF)
+if(SAVE_TIMES)
+	message(STATUS "Building with SAVE_TIMES")
+	add_definitions(-DSAVE_TIMES)
+endif()
 
 ## Find catkin and any catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp nodelet std_msgs geometry_msgs gencpp tf tf_conversions)

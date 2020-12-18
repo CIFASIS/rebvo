@@ -88,6 +88,12 @@ private:
 
 	std::unique_ptr<rebvo::REBVO> rebvo_;
 
+#ifdef SAVE_TIMES
+    std::ofstream f_track_times_;
+    int num_tracked_frames_;
+#endif
+
+
 };
 
 bool imgMsg2Rebvo(const sensor_msgs::ImageConstPtr &imgMsg,

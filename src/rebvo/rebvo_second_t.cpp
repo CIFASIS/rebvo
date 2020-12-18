@@ -45,6 +45,13 @@ void  REBVO::SecondThread(REBVO *cf){
     using namespace TooN;
 
 
+#ifdef SAVE_TIMES
+    std::ofstream f_track_times_;
+    f_track_times_.open("tracking_times_end.txt");
+    f_track_times_ << std::fixed;
+    f_track_times_ << std::setprecision(6);
+    int num_tracked_frames_ = 0;
+#endif
 
     double dt_frame;
 
@@ -600,6 +607,11 @@ void  REBVO::SecondThread(REBVO *cf){
 
         cf->pushNav(new_buf.nav);
 
+#ifdef SAVE_TIMES
+        num_tracked_frames_++;
+        auto const t = std::chrono::system_clock::now().time_since_epoch().count();
+        f_track_times_ << num_tracked_frames_ << " " << t / 1e09 << std::endl;
+#endif
 
         if(cf->system_reset){   //Do a depth reset to the New Edgemap
             for (auto &kl: (*new_buf.ef)) {
@@ -626,7 +638,9 @@ void  REBVO::SecondThread(REBVO *cf){
 
 
     Thr2.join();
-
+#ifdef SAVE_TIMES
+    f_track_times_.close();
+#endif
     return;
 }
 
