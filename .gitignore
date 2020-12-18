@@ -36,3 +36,6 @@
 /Release/
 
 outputs/
+app/visualizer/visualizer
+app/rebvorun/rebvorun
+app/kf_visualizer/kf_visualizer
