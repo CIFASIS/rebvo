@@ -15,74 +15,69 @@ A ROS wrapper (under development)
 
 Introductory video: https://youtu.be/7pn29iGklgI
 
-### Docker Support
-A script to build a docker image is provided:
-```
-./build.sh
-```
-Dataset must be saved in EuRoC directory structure.
-```
-path/to/dataset/
-├── cam0
-│   ├── data
-│   │   ├── 1514301955572000000.png
-│   │   ...
-│   │   └── 1514302515181000000.png
-│   └── data.csv                       # Two-column file (timestamp in nanoseconds and image filename)
-├── cam1
-│   ├── data
-│   │   ├── 1514301955572000000.png
-│   │   ...
-│   │   └── 1514302515181000000.png
-│   └── data.csv                       # Two-column file (timestamp in nanoseconds and image filename)
-└── imu0
-    └── data.csv                       # A CSV file containing IMU data (with timestamps in nanoseconds)
+## Original repository
+This repository is a modified version of [rebvo](https://github.com/JuanTarrio/rebvo/) (see original README below). We facilitate the installation process and the use of Docker.
 
+## Docker support
+
+In order to facilitate the installation process, the system is wrapped up using Docker.
+We provide scripts to create a Docker image, build the system and run it in a Docker container. 
+
+### Dependencies 
+* Docker
+* ROS
+* [`pose_listener`](https://github.com/CIFASIS/pose_listener) (if you use `run_rosario_sequence.sh`, see below)
+
+### Building the system
+Run:
 ```
-Write your own configuration file. Take `GlobalConfig_Rosario` as an example.
-Then, open two terminals and open a shell in a docker container in each terminal:
-```
-./run.sh path/to/dataset/
-```
-In the first one, run the visualizer:
-```
-cd /root/rebvo/app/visualizer
-./visualizer GlobalConfig_Rosario     # GlobalConfig_Rosario is given as an example
-```
-In the second terminal, run rebvo:
-```
-cd /root/rebvo/app/rebvorun
-./rebvorun GlobalConfig_Rosario     # GlobalConfig_Rosario is given as an example
-```
-Output file can be copied to the host using `docker cp`. The name of the output file is configured in the configuration file and it is usually saved in `/root/rebvo/app/rebvorun`. 
-If you want to evaluate the trajectory using evo, and you get the following error:
-```
-[ERROR] TUM trajectory files must have 8 entries per row and no trailing delimiter at the end of the rows (space)
-```
-Just use `sed` to remove last character in each line:
-```
-sed 's/.$//' rebvo_rosario_tray.txt > rebvo_output.txt
+./run.sh -b
 ```
 
-**NOTE**: a script to convert Rosario dataset to Euroc directory structure will be provided.
-#### ROS support (in a docker container)
-If you prefer to run `rebvo` with ROS support, just build the image as explained in the above section.
-Then, run `./run.sh`. Once in the container, go to the workspace and source the `devel` space:
+This command creates a Docker image, installs all the dependencies and builds the system. The resulting image contains a version of the system ready to be run.
+
+### Running the system in VIS mode
+If you are not interested in making changes in the source code, you should run the system in VIS mode. Run:
 ```
-cd /root/rebvo/ros
-catkin_make
-source devel/setup.bash
+./run.sh -v
 ```
-Now, you can start the main node:
+The system is launched in a Docker container based on the previously built image. By default, this command executes a launch file which is configured to run the Rosario dataset. If you want to run your own dataset, **write a launch file and placed it in** `ros/src/rebvo_ros/launch/`. Configuration files must be placed in the `ros/src/rebvo_ros/config/` folder. Then, run the script with the option `-l <LAUNCH_FILE_NAME>`. For example, if you are testing EuRoC, write `euroc_dataset.launch`, move it into `ros/src/rebvo_ros/launch/` and type:
 ```
-roslaunch rebvo rebvo_rosario.launch
+./run.sh -v -l euroc_dataset.launch
 ```
-Write your own configuration if you need it, based on the following files:
+Making changes in launch/configuration files in the host is possible because these folders are mounted into the Docker container. It is not necessary to access the container through a bash shell to modify these files.
+
+See below for information about input data and visualization.
+
+### Running the system in DEV mode
+DEV mode allows developers to make changes in the source code, recompile the system and run it with the modifications. To do this, the whole repository is mounted in a container. Run:
 ```
-ros/src/rebvo_ros/launch/rebvo_rosario.launch
-ros/src/rebvo_ros/config/rebvo_rosario.yaml
-ros/src/rebvo_ros/resource/rebvo_rosario.rviz
+./run.sh -d
 ```
+This opens a bash shell in a docker container. You can edit source files in the host and after that you can use this shell to recompile the system. When the compilation process finishes, you can run the method using `roslaunch`.
+
+See below for information about input data and visualization.
+
+### Input data and visualization
+
+At this point, the system is waiting for input data. Either you can run `rosbag play` or you can use `run_rosario_sequence.sh`.
+If you choose the latter, open a second terminal and run:
+```
+./run_rosario_sequence.sh -o <OUTPUT_TRAJECTORY_FILE> <ROSBAG_FILE>
+```
+In contrast to what `run.sh` does, `run_rosario_sequence.sh` executes commands in the host (you can modify it to use a Docker container). 
+
+`ROSBAG_FILE` is played using `rosbag`. Also, make sure you have cloned and built `pose_listener` in your catkin workspace. Default path for the workspace is `${HOME}/catkin_ws`, set `CATKIN_WS_DIR` if the workspace is somewhere else (e.g.: `export CATKIN_WS_DIR=$HOME/foo_catkin_ws`). `pose_listener` saves the estimated trajectory in `<OUTPUT_TRAJECTORY_FILE>` (use absolute path). You can edit `run_rosario_sequence.sh` if you prefer to save the trajectory using your own methods. Additionally, `run_rosario_sequence.sh` launches `rviz` to display visual information during the execution of the system.
+
+Alternatively, if you are not interested in development but in testing or visualization, instead of running `run.sh` and `run_rosario_sequence.sh` in two different terminals, you can just run:
+```
+./run_rosario_sequence.sh -r -o <OUTPUT_TRAJECTORY_FILE> <ROSBAG_FILE>
+```
+This launches a Docker container and executes the default launch file (see `LAUNCH_FILE` in `run.sh`). After that, the bagfile is played and `rviz` and `pose_listener` are launched. Add `-b` if you want to turn off the visualization.
+
+
+
+# Original README
 
 ### System requirements
 
